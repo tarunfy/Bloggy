@@ -3,8 +3,13 @@ import { Button, IconButton } from "@chakra-ui/react";
 import Edit from "../components/Edit";
 import Preview from "../components/Preview";
 import Layout from "../components/Layout";
+import { useState } from "react";
 
 const create = () => {
+  const [markdown, setMarkdown] = useState(``);
+  const [title, setTitle] = useState("");
+  const [coverImage, setCoverImage] = useState(null);
+
   return (
     <div>
       <Layout
@@ -19,10 +24,17 @@ const create = () => {
       </div>
       <div className="flex items-start justify-start">
         <div className="w-2/4 h-screen overflow-y-scroll">
-          <Edit />
+          <Edit
+            title={title}
+            setTitle={setTitle}
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            coverImage={coverImage}
+            setCoverImage={setCoverImage}
+          />
         </div>
         <div className="w-2/4 overflow-y-scroll h-screen">
-          <Preview />
+          <Preview markdown={markdown} title={title} coverImage={coverImage} />
         </div>
       </div>
     </div>

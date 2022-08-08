@@ -1,13 +1,15 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { IconButton, useColorMode } from "@chakra-ui/react";
-import { useState } from "react";
 import FileUpload from "./FileUpload";
 
-const Edit = () => {
-  const [title, setTitle] = useState("");
-  const [markdown, setMarkdown] = useState("");
-  const [coverImage, setCoverImage] = useState(null);
-
+const Edit = ({
+  markdown,
+  setMarkdown,
+  title,
+  setTitle,
+  coverImage,
+  setCoverImage,
+}) => {
   const { colorMode } = useColorMode();
 
   const handleTextareaSize = (e) => {
@@ -17,7 +19,7 @@ const Edit = () => {
 
   return (
     <div
-      className={`max-h-screen border-[.6px] p-12 overflow-y-scroll ${
+      className={`max-h-screen border-[.6px] p-12 pt-14 overflow-y-scroll ${
         colorMode === "light"
           ? "!border-gray-300 !bg-white/50"
           : "!border-gray-50/70 !bg-[#2D3748]/50"
@@ -59,6 +61,8 @@ const Edit = () => {
           onKeyUp={(e) => handleTextareaSize(e)}
         />
         <textarea
+          value={markdown}
+          onChange={(e) => setMarkdown(e.target.value)}
           placeholder="Write your post content here...."
           className="resize-none w-full border-none focus:border-none bg-transparent text-md focus:outline-none"
           onKeyUp={(e) => handleTextareaSize(e)}
