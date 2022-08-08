@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-const removeImports = require("next-remove-imports")();
 
 const nextConfig = {
   reactStrictMode: true,
@@ -15,8 +14,4 @@ const nextConfig = {
   },
 };
 
-module.exports = (phase, { nextConfig }) => {
-  return removeImports({
-    ...nextConfig,
-  });
-};
+module.exports = nextConfig;
