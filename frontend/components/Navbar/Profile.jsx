@@ -21,7 +21,11 @@ const Profile = () => {
           src="https://bit.ly/dan-abramov"
         />
       </MenuButton>
-      <MenuList className={`${colorMode === "light" && "!bg-white/50"}`}>
+      <MenuList
+        className={`${
+          colorMode === "light" && "!bg-white/50 !border-gray-300"
+        }`}
+      >
         <Link href="/profile/tarunfy">
           <a>
             <MenuItem>@tarunfy</MenuItem>
