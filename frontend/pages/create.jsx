@@ -1,9 +1,9 @@
-import { CloseIcon } from "@chakra-ui/icons";
-import { Button, IconButton } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import Edit from "../components/Edit";
 import Preview from "../components/Preview";
 import Layout from "../components/Layout";
 import { useState } from "react";
+import CancelModal from "../components/CancelModal";
 
 const create = () => {
   const [markdown, setMarkdown] = useState(``);
@@ -20,7 +20,7 @@ const create = () => {
         <Button className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] text-white">
           Publish
         </Button>
-        <IconButton variant="outline" icon={<CloseIcon />} />
+        <CancelModal />
       </div>
       <div className="flex items-start justify-start">
         <div className="w-2/4 h-screen overflow-y-scroll">
