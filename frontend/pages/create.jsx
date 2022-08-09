@@ -3,7 +3,7 @@ import Edit from "../components/Edit";
 import Preview from "../components/Preview";
 import Layout from "../components/Layout";
 import { useState } from "react";
-import CancelModal from "../components/CancelModal";
+import CancelModal from "../components/Modals/CancelModal";
 
 const create = () => {
   const [markdown, setMarkdown] = useState(``);

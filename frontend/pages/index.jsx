@@ -1,13 +1,12 @@
 import { Spinner } from "@chakra-ui/react";
 import { useState } from "react";
-import Article from "../components/Aritcle/Article";
-import Option from "../components/Aritcle/Option";
-import Sidebar from "../components/Aritcle/Sidebar";
+import Option from "../components/Blog/Option";
+import Sidebar from "../components/Blog/Sidebar";
+import Blog from "../components/Blog/Blog";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
 export default function Home({ news }) {
-  console.log(news);
   const [isLoading, setIsLoading] = useState(false);
   const [filterBy, setFilterBy] = useState("Relevant");
   return (
@@ -39,24 +38,9 @@ export default function Home({ news }) {
             </div>
           ) : (
             <>
-              <Article name={filterBy} img={true} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
-              <Article name={filterBy} />
+              <Blog img={true} />
+              <Blog />
+              <Blog />
             </>
           )}
         </div>

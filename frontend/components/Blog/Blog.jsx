@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BsSuitHeart } from "react-icons/bs";
 import { AiOutlineComment } from "react-icons/ai";
 
-const Article = ({ name, img }) => {
+const Blog = ({ name, img }) => {
   //check if the index is 0 of this element and if it is then show banner img if there is one.
   const [firstElement, setFirstElement] = useState(true);
   const { colorMode } = useColorMode();
@@ -76,4 +76,4 @@ const Article = ({ name, img }) => {
   );
 };
 
-export default Article;
+export default Blog;

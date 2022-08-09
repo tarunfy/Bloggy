@@ -23,7 +23,7 @@ const Sidebar = ({ news }) => {
         }`}
       >
         {articles.map((article, index) => (
-          <Link href={article.url}>
+          <Link key={index} href={article.url}>
             <li className="px-2 py-4 group cursor-pointer" key={index}>
               <img
                 src={article?.urlToImage}
