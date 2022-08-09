@@ -17,14 +17,18 @@ const Sidebar = ({ news }) => {
       <div className="p-2">
         <h1 className="text-xl font-semibold">Latest tech news 👨‍💻</h1>
       </div>
-      <ul className="divide-y ">
+      <ul
+        className={`divide-y ${
+          colorMode === "light" ? "divide-gray-300" : "divide-gray-100/50"
+        }`}
+      >
         {articles.map((article, index) => (
           <Link href={article.url}>
-            <li className="p-2 group cursor-pointer" key={index}>
+            <li className="px-2 py-4 group cursor-pointer" key={index}>
               <img
                 src={article?.urlToImage}
                 alt="img"
-                className="w-full object-cover mb-2 rounded-md"
+                className="w-full h-40 object-cover mb-2 rounded-md"
               />
               <a target="_blank">
                 <p
