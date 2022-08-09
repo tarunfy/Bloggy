@@ -6,7 +6,7 @@ const Option = ({ filterBy, setFilterBy, name }) => {
       <h3
         className={`${
           filterBy === name ? "font-bold" : "font-normal"
-        } hover:text-[#4A18D7] transition cursor-pointer`}
+        } hover:text-[#4A18D7] text-xl transition cursor-pointer`}
         onClick={() => setFilterBy(name)}
       >
         {name}

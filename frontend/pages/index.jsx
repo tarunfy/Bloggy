@@ -6,7 +6,8 @@ import Sidebar from "../components/Aritcle/Sidebar";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
-export default function Home() {
+export default function Home({ news }) {
+  console.log(news);
   const [isLoading, setIsLoading] = useState(false);
   const [filterBy, setFilterBy] = useState("Relevant");
   return (
@@ -59,10 +60,24 @@ export default function Home() {
             </>
           )}
         </div>
-        <div>
-          <Sidebar />
+        <div className="overflow-x-hidden w-full">
+          <Sidebar news={news} />
         </div>
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(
+    `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.API_KEY}`
+  );
+
+  const data = await res.json();
+
+  return {
+    props: {
+      news: data,
+    },
+  };
 }
