@@ -1,6 +1,6 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { IconButton, useColorMode } from "@chakra-ui/react";
-import FileUpload from "./FileUpload";
+import FileUpload from "../FileUpload";
 
 const Edit = ({
   markdown,

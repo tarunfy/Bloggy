@@ -2,6 +2,7 @@ import { Button, useColorMode } from "@chakra-ui/react";
 import { BsSuitHeart } from "react-icons/bs";
 import { AiOutlineComment } from "react-icons/ai";
 import Link from "next/link";
+import DeleteBlogModal from "../Modals/DeleteBlogModal";
 
 const BlogCard = () => {
   const { colorMode } = useColorMode();
@@ -18,7 +19,7 @@ const BlogCard = () => {
           <a>
             <h1
               className={`text-lg max-w-md font-bold ${
-                colorMode === "light" ? "text-[#313CB3]" : "text-[#aa91f1]"
+                colorMode === "light" ? "text-[#313CB3]" : "text-[#7f5dde]"
               }`}
             >
               How to connect your flask application to AWS RDS with a CI/CD
@@ -47,7 +48,7 @@ const BlogCard = () => {
         <Button className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] text-white">
           Edit
         </Button>
-        <Button colorScheme="red">Delete</Button>
+        <DeleteBlogModal />
       </div>
     </div>
   );

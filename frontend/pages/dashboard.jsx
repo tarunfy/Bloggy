@@ -4,7 +4,7 @@ import BlogCard from "../components/Card/BlogCard";
 import Layout from "../components/Layout";
 
 const Dashboard = () => {
-  const [blogs, setBlogs] = useState([1, 2, 3]);
+  const [blogs, setBlogs] = useState([1]);
   return (
     <div>
       <Layout

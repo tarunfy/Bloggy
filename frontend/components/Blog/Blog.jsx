@@ -40,7 +40,7 @@ const Blog = ({ name, img }) => {
             className={`text-[1.7rem] max-w-xl font-bold mt-3 ${
               colorMode === "light"
                 ? "hover:!text-[#313CB3]"
-                : "hover:!text-[#aa91f1]"
+                : "hover:!text-[#7f5dde]"
             }`}
           >
             How to connect your flask application to AWS RDS with a CI/CD

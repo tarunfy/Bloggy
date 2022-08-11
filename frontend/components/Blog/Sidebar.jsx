@@ -35,7 +35,7 @@ const Sidebar = ({ news }) => {
                   className={`text-sm ${
                     colorMode === "light"
                       ? "group-hover:!text-[#313CB3]"
-                      : "group-hover:!text-[#aa91f1]"
+                      : "group-hover:!text-[#7f5dde]"
                   }`}
                 >
                   {article.title}

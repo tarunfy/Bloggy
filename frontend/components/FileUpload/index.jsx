@@ -1,6 +1,6 @@
-import { FormControl, InputGroup, Button, Spinner } from "@chakra-ui/react";
+import { FormControl, InputGroup, Button } from "@chakra-ui/react";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const FileUpload = ({ name, acceptedFileTypes, text, setCoverImage }) => {
   const handleCoverImage = (e) => {
@@ -17,6 +17,7 @@ const FileUpload = ({ name, acceptedFileTypes, text, setCoverImage }) => {
       return;
     }
   };
+
   const inputRef = useRef();
 
   return (
