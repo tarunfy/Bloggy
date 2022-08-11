@@ -2,6 +2,7 @@ import { Avatar, useColorMode } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BsSuitHeart } from "react-icons/bs";
 import { AiOutlineComment } from "react-icons/ai";
+import Link from "next/link";
 
 const Blog = ({ name, img }) => {
   //check if the index is 0 of this element and if it is then show banner img if there is one.
@@ -36,16 +37,18 @@ const Blog = ({ name, img }) => {
         <div>
           <h5>Tarun Sharma</h5>
           <p className="text-xs">2 days ago</p>
-          <h2
-            className={`text-[1.7rem] max-w-xl font-bold mt-3 ${
-              colorMode === "light"
-                ? "hover:!text-[#313CB3]"
-                : "hover:!text-[#7f5dde]"
-            }`}
-          >
-            How to connect your flask application to AWS RDS with a CI/CD
-            pipeline
-          </h2>
+          <Link href="/details/2132312">
+            <a
+              className={`text-[1.7rem] max-w-xl font-bold mt-3 ${
+                colorMode === "light"
+                  ? "hover:!text-[#313CB3]"
+                  : "hover:!text-[#7f5dde]"
+              }`}
+            >
+              How to connect your flask application to AWS RDS with a CI/CD
+              pipeline
+            </a>
+          </Link>
           <div className="flex items-center space-x-2 mt-3">
             <div
               className={`flex  p-2 rounded-lg items-center space-x-2  text-lg ${

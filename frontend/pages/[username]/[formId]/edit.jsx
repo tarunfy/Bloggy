@@ -1,11 +1,12 @@
-import { Button } from "@chakra-ui/react";
-import Edit from "../components/Edit";
-import Preview from "../components/Preview";
-import Layout from "../components/Layout";
+import { Button, IconButton } from "@chakra-ui/react";
+import Editor from "../../../components/Edit";
+import Preview from "../../../components/Preview";
+import Layout from "../../../components/Layout";
 import { useState } from "react";
-import CancelModal from "../components/Modals/CancelModal";
+import { CloseIcon } from "@chakra-ui/icons";
+import Link from "next/link";
 
-const Create = () => {
+const Edit = () => {
   const [markdown, setMarkdown] = useState(``);
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState(null);
@@ -18,13 +19,15 @@ const Create = () => {
       />
       <div className="w-full absolute top-0 flex items-center justify-end space-x-2 py-[5px] pr-2">
         <Button className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] text-white">
-          Publish
+          Save Changes
         </Button>
-        <CancelModal />
+        <Link href="/">
+          <IconButton variant="outline" icon={<CloseIcon />} />
+        </Link>
       </div>
       <div className="flex items-start justify-start">
         <div className="w-2/4 h-screen overflow-y-scroll">
-          <Edit
+          <Editor
             title={title}
             setTitle={setTitle}
             markdown={markdown}
@@ -41,4 +44,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Edit;

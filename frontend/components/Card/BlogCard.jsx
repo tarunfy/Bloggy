@@ -45,9 +45,11 @@ const BlogCard = () => {
       </div>
 
       <div className="flex items-center space-x-2">
-        <Button className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] text-white">
-          Edit
-        </Button>
+        <Link href="/tarunfy/3223423/edit">
+          <Button className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] text-white">
+            Edit
+          </Button>
+        </Link>
         <DeleteBlogModal />
       </div>
     </div>

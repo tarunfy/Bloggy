@@ -40,7 +40,6 @@ export default function Home({ news }) {
             <>
               <Blog img={true} />
               <Blog />
-              <Blog />
             </>
           )}
         </div>
