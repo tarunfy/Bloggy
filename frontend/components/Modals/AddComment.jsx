@@ -10,10 +10,9 @@ import {
   useDisclosure,
   Button,
   Input,
-  useToast,
 } from "@chakra-ui/react";
 
-const AddComment = ({ id, type }) => {
+const AddComment = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState("");
   return (
@@ -24,6 +23,7 @@ const AddComment = ({ id, type }) => {
       >
         Add comment
       </Button>
+
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="none" backdropFilter="auto" backdropBlur="2px" />
         <ModalContent>

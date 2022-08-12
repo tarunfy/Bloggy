@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "isomorphic-dompurify": "^0.20.0",
-    "showdown": "^2.1.0"
-  }
-}
