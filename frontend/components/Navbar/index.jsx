@@ -8,7 +8,7 @@ import Profile from "./Profile";
 
 const Navbar = () => {
   const [audio, setAudio] = useState(null);
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     setAudio(new Audio("/audios/switch.mp3"));
