@@ -29,10 +29,10 @@ const Login = () => {
           </div>
 
           <Input
-            type="email"
+            type="text"
             width="md"
             variant="outline"
-            placeholder="Email"
+            placeholder="username"
             display="block"
           />
 
