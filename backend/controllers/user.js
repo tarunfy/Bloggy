@@ -38,7 +38,58 @@ const signup = async (req, res) => {
   }
 };
 
+//update profile:
+const profileUpdate = async (req, res) => {
+  const id = req.params.userId;
+  try {
+    //check if the username is there taken in req:
+    if (req.body.username) {
+      //check if the username is taken or not:
+      const taken = await UserModel.findOne({ username: req.body.username });
+
+      if (taken) {
+        return res
+          .status(400)
+          .json({ error: "Username already taken, try a different one" });
+      }
+    }
+
+    //check if the email is there taken in req:
+    if (req.body.email) {
+      //check if the email is taken or not:
+      const taken = await UserModel.findOne({ email: req.body.email });
+
+      if (taken) {
+        return res
+          .status(400)
+          .json({ error: "Email already taken, try a different one" });
+      }
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        ...req.body,
+      },
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "No user found" });
+    }
+
+    res.status(200).json({ user: updatedUser });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   login,
   signup,
+  profileUpdate,
 };
