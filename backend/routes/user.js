@@ -1,13 +1,10 @@
 const Router = require("express").Router();
+const { login, signup } = require("../controllers/user");
 
 //signup
-Router.post("/signup", (req, res) => {
-  res.json({ mssg: "signup" });
-});
+Router.post("/signup", signup);
 
 //login
-Router.post("/login", (req, res) => {
-  res.json({ mssg: "login" });
-});
+Router.post("/login", login);
 
 module.exports = Router;

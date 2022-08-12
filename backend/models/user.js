@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,5 +40,54 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.statics.signup = async function (
+  email,
+  password,
+  username,
+  fullname
+) {
+  //checking if all fields are recieved:
+  if (!email || !password || !username || !fullname) {
+    throw Error("All fields must be required.");
+  }
+
+  //validating email & password:
+  if (!validator.isEmail(email)) {
+    throw Error("Please enter a valid email");
+  }
+
+  if (!validator.isStrongPassword(password)) {
+    throw Error("Please enter a strong password");
+  }
+
+  //check if the user already exists in our db with that email:
+  const emailTaken = await this.findOne({ email });
+
+  if (emailTaken) {
+    throw Error("User already exists with that email address");
+  }
+
+  //check if the user already exists in our db with that username:
+  const usernameTaken = await this.findOne({ username });
+
+  if (usernameTaken) {
+    throw Error("Username already taken");
+  }
+
+  const salt = await bcrypt.genSalt(10);
+
+  const hasedPassword = await bcrypt.hash(password, salt);
+
+  const user = await this.create({
+    email,
+    password: hasedPassword,
+    username,
+    fullname,
+  });
+
+  return user;
+};
+userSchema.statics.login = async function (username, password) {};
 
 module.exports = mongoose.model("User", userSchema);
