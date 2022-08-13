@@ -27,7 +27,7 @@ const Profile = () => {
     if (!user) {
       router.push("/");
     }
-  }, []);
+  }, [user]);
 
   if (!user) {
     return (

@@ -25,6 +25,7 @@ const Settings = () => {
 
   const { user } = useAuthContext();
   const { error, isLoading, updateProfile } = useUpdateProfile();
+
   const toast = useToast();
 
   const nameRef = useRef(null);
@@ -34,6 +35,27 @@ const Settings = () => {
   const websiteUrlRef = useRef(null);
   const twitterHandleRef = useRef(null);
   const githubHandleRef = useRef(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      nameRef.current.value = user?.fullname;
+      workRef.current.value = user?.work ? user?.work : "";
+      educationRef.current.value = user?.education ? user?.education : "";
+      bioRef.current.value = user?.bio ? user?.bio : "";
+      websiteUrlRef.current.value = user?.websiteUrl ? user?.websiteUrl : "";
+      githubHandleRef.current.value = user?.github ? user?.github : "";
+      twitterHandleRef.current.value = user?.twitter ? user?.twitter : "";
+      setProfileImage(user?.profileImage ? user?.profileImage : "");
+    }
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,14 +82,6 @@ const Settings = () => {
     }
   };
 
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-  }, []);
-
   if (!user) {
     return (
       <Center w="100vw" h="100vh">
@@ -75,17 +89,6 @@ const Settings = () => {
       </Center>
     );
   }
-
-  useEffect(() => {
-    nameRef.current.value = user?.fullname;
-    workRef.current.value = user?.work ? user?.work : "";
-    educationRef.current.value = user?.education ? user?.education : "";
-    bioRef.current.value = user?.bio ? user?.bio : "";
-    websiteUrlRef.current.value = user?.websiteUrl ? user?.websiteUrl : "";
-    githubHandleRef.current.value = user?.github ? user?.github : "";
-    twitterHandleRef.current.value = user?.twitter ? user?.twitter : "";
-    setProfileImage(user?.profileImage ? user?.profileImage : "");
-  }, [user]);
 
   if (isLoading) {
     return (

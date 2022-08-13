@@ -34,7 +34,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(usernameRef.current.value, passwordRef.current.value);
+    await login(
+      usernameRef.current.value.trim(),
+      passwordRef.current.value.trim()
+    );
   };
 
   if (isLoading) {
