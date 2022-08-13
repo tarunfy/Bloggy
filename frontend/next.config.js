@@ -22,6 +22,10 @@ const nextConfig = {
         source: "/api/user/login",
         destination: "http://localhost:4000/api/user/login", // Proxy to Backend
       },
+      {
+        source: "/api/user/:userId",
+        destination: "http://localhost:4000/api/user/:userId", // Proxy to Backend
+      },
     ];
   },
 };

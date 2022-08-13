@@ -1,4 +1,10 @@
-import { Avatar, Button, useColorMode } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Center,
+  Spinner,
+  useColorMode,
+} from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Layout from "../components/Layout";
 import Link from "next/link";
@@ -8,15 +14,34 @@ import { BsGlobe } from "react-icons/bs";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 import { useAuthContext } from "../hooks/useAuthContext";
 import moment from "moment";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Profile = () => {
   const { user } = useAuthContext();
   const { colorMode } = useColorMode();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, []);
+
+  if (!user) {
+    return (
+      <Center w="100vw" h="100vh">
+        <Spinner size="lg" />
+      </Center>
+    );
+  }
+
   return (
     <div>
       <Layout
-        title={`${user.fullname} - Bloggy Community`}
-        description={`${user.fullname}'s profile page`}
+        title={`${user?.fullname} - Bloggy Community`}
+        description={`${user?.fullname}'s profile page`}
       />
       <Navbar />
 
@@ -32,7 +57,7 @@ const Profile = () => {
             colorMode === "light" ? " !bg-[#d8dadb80] " : " !bg-[#1A202C]"
           }`}
         >
-          <Avatar size="xl" name={user.fullname} src={user?.profileImage} />
+          <Avatar size="xl" name={user?.fullname} src={user?.profileImage} />
         </div>
         <div className="w-full flex justify-end">
           <Link href="/settings">
@@ -44,20 +69,20 @@ const Profile = () => {
           </Link>
         </div>
         <div className="text-center mt-5 space-y-6 px-10">
-          <div>
-            <h1 className="font-bold text-3xl">{user.fullname}</h1>
+          <div className="space-y-2">
+            <h1 className="font-bold text-3xl">{user?.fullname}</h1>
             <p className="text-lg">{user?.bio}</p>
           </div>
           <div className="flex items-center justify-between w-full space-x-3">
             <div className="flex items-center space-x-2">
               <RiCake2Line />
-              <p>{`Joined on ${moment(user.createdAt).date()} ${moment(
-                user.createdAt
-              ).format("MMMM")} ${moment(user.createdAt).format("YYYY")}`}</p>
+              <p>{`Joined on ${moment(user?.createdAt).date()} ${moment(
+                user?.createdAt
+              ).format("MMMM")} ${moment(user?.createdAt).format("YYYY")}`}</p>
             </div>
             <div className="flex items-center space-x-2">
               <FiMail />
-              <a href={`mailto:${user.email}`}>{`${user.email}`}</a>
+              <a href={`mailto:${user?.email}`}>{`${user?.email}`}</a>
             </div>
             {user?.websiteUrl && (
               <div className="flex items-center space-x-2">

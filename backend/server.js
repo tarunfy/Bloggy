@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRouter = require("./routes/user");
 const BlogRouter = require("./routes/blog");
+const bodyParser = require("body-parser");
 
 dotenv.config();
 
@@ -11,8 +12,8 @@ dotenv.config();
 const app = express();
 
 // global middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 app.use(
   cors({
     credentials: true,

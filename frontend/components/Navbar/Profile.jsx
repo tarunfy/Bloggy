@@ -7,7 +7,6 @@ import {
   MenuItem,
   Avatar,
   MenuDivider,
-  useColorMode,
 } from "@chakra-ui/react";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -15,17 +14,12 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 const Profile = () => {
   const logout = useLogout();
   const { user } = useAuthContext();
-  const { colorMode } = useColorMode();
   return (
     <Menu>
       <MenuButton as={"button"} righticon={<ChevronDownIcon />}>
         <Avatar size="md" name={user.fullname} src={user?.profileImage} />
       </MenuButton>
-      <MenuList
-        className={`${
-          colorMode === "light" && "!bg-white/50 !border-gray-300"
-        }`}
-      >
+      <MenuList>
         <Link href={`/${user.username}`}>
           <a>
             <MenuItem>@{user.username}</MenuItem>

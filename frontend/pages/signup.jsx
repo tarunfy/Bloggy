@@ -8,9 +8,16 @@ import { useRouter } from "next/router";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Signup = () => {
+  const usernameRef = useRef(null);
+  const fullnameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
   const { colorMode } = useColorMode();
 
   const router = useRouter();
+
+  const { error, isLoading, signup } = useSignup();
 
   const { user } = useAuthContext();
 
@@ -18,14 +25,7 @@ const Signup = () => {
     if (user) {
       router.push("/");
     }
-  }, []);
-
-  const usernameRef = useRef(null);
-  const fullnameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  const { error, isLoading, signup } = useSignup();
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +40,13 @@ const Signup = () => {
   if (isLoading) {
     return (
       <Center h="100vh" w="100vw">
+        <Spinner size="lg" />
+      </Center>
+    );
+  }
+  if (user) {
+    return (
+      <Center w="100vw" h="100vh">
         <Spinner size="lg" />
       </Center>
     );

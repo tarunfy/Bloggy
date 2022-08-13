@@ -24,6 +24,14 @@ const Login = () => {
     }
   }, [user]);
 
+  if (user) {
+    return (
+      <Center w="100vw" h="100vh">
+        <Spinner size="lg" />
+      </Center>
+    );
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(usernameRef.current.value, passwordRef.current.value);

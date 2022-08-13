@@ -78,6 +78,8 @@ const profileUpdate = async (req, res) => {
       }
     );
 
+    updatedUser.password = undefined;
+
     if (!updatedUser) {
       return res.status(404).json({ error: "No user found" });
     }
