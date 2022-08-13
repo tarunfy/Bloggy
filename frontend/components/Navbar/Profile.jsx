@@ -9,8 +9,10 @@ import {
   MenuDivider,
   useColorMode,
 } from "@chakra-ui/react";
+import { useLogout } from "../../hooks/useLogout";
 
 const Profile = () => {
+  const logout = useLogout();
   const { colorMode } = useColorMode();
   return (
     <Menu>
@@ -43,7 +45,7 @@ const Profile = () => {
           </a>
         </Link>
         <MenuDivider />
-        <MenuItem>Sign Out</MenuItem>
+        <MenuItem onClick={logout}>Sign Out</MenuItem>
       </MenuList>
     </Menu>
   );

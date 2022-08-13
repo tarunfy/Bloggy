@@ -1,19 +1,48 @@
-import { Button, Input, useColorMode } from "@chakra-ui/react";
+import { Button, Center, Input, Spinner, useColorMode } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogin } from "../hooks/useLogin";
+import { useRef, useEffect } from "react";
 
 const Login = () => {
-  const [error, setError] = useState(false);
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
+  const router = useRouter();
   const { colorMode } = useColorMode();
+
+  const { error, isLoading, login } = useLogin();
+
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(usernameRef.current.value, passwordRef.current.value);
+  };
+
+  if (isLoading) {
+    return (
+      <Center h="100vh" w="100vw">
+        <Spinner size="lg" />
+      </Center>
+    );
+  }
 
   return (
     <div>
       <Layout title="Bloggy || Login" description="Bloggy login page" />
       <div className="flex justify-center items-center h-screen">
         <form
+          onSubmit={(e) => handleSubmit(e)}
           className={`${
             colorMode === "light"
               ? "!border-gray-300 !bg-white/50"
@@ -32,8 +61,9 @@ const Login = () => {
             type="text"
             width="md"
             variant="outline"
-            placeholder="username"
+            placeholder="Username"
             display="block"
+            ref={usernameRef}
           />
 
           <Input
@@ -42,9 +72,14 @@ const Login = () => {
             variant="outline"
             placeholder="Password"
             display="block"
+            ref={passwordRef}
           />
 
-          <Button className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] !w-full text-white">
+          <Button
+            disabled={isLoading}
+            type="submit"
+            className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] !w-full text-white"
+          >
             Log in
           </Button>
           <p className="text-center">
