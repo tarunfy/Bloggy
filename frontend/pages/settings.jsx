@@ -127,6 +127,25 @@ const Settings = () => {
             <Input type="text" variant="outline" display="block" required />
           </div>
         </div>
+
+        {/* SOCIAL */}
+        <div
+          className={`mx-32 mt-10 border rounded-md px-5 py-10 space-y-5 mb-5 ${
+            colorMode === "light"
+              ? "!border-gray-300 !bg-white/50"
+              : "!border-gray-50/70 !bg-[#2D3748]/50"
+          }`}
+        >
+          <h1 className="text-3xl font-bold">Social</h1>
+          <div className="space-y-1">
+            <label>Github username</label>
+            <Input type="text" variant="outline" display="block" required />
+          </div>
+          <div className="space-y-1">
+            <label>Twitter username</label>
+            <Input type="text" variant="outline" display="block" required />
+          </div>
+        </div>
       </div>
     </div>
   );

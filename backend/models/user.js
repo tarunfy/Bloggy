@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema(
     education: {
       type: String,
     },
+    github: {
+      type: String,
+    },
+    twitter: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
