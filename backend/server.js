@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const UserRouter = require("./routes/user");
 const BlogRouter = require("./routes/blog");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const authCheck = require("./middlewares/authCheck");
 
 dotenv.config();
 
@@ -20,10 +22,11 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+app.use(cookieParser());
 
 //Routes:
 app.use("/api/user", UserRouter);
-app.use("/api/blogs", BlogRouter);
+app.use("/api/blogs", authCheck, BlogRouter);
 
 //connecting to mongodb:
 mongoose

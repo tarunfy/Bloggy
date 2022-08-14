@@ -29,7 +29,10 @@ export const AuthProvider = ({ children }) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     if (userInfo) {
-      dispatch({ type: "LOGIN", payload: userInfo.user });
+      dispatch({
+        type: "LOGIN",
+        payload: { ...userInfo.user, token: userInfo.token },
+      });
     }
   }, []);
 

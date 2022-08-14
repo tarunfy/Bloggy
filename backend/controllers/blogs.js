@@ -1,9 +1,7 @@
-import mongoose from "mongoose";
-
 const BlogModel = require("../models/blog");
 
 //get all blogs:
-export const getBlogs = async (req, res) => {
+const getBlogs = async (req, res) => {
   try {
     const blogs = await BlogModel.find({});
     res.status(200).json({ blogs });
@@ -13,7 +11,7 @@ export const getBlogs = async (req, res) => {
 };
 
 //get a single blog:
-export const getBlog = async (req, res) => {
+const getBlog = async (req, res) => {
   const blogId = req.params.blogId;
 
   if (!mongoose.Types.ObjectId.isValid(blogId)) {
@@ -36,7 +34,7 @@ export const getBlog = async (req, res) => {
 };
 
 //create a blog:
-export const createBlog = async (req, res) => {
+const createBlog = async (req, res) => {
   const emptyFields = [];
 
   if (!req.body.markDown) {
@@ -62,7 +60,7 @@ export const createBlog = async (req, res) => {
 };
 
 //delete a blog:
-export const deleteBlog = async (req, res) => {
+const deleteBlog = async (req, res) => {
   const blogId = req.params.blogId;
 
   if (!mongoose.Types.ObjectId.isValid(blogId)) {

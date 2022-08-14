@@ -16,7 +16,13 @@ const login = async (req, res) => {
     //create token:
     const token = genToken(user._id);
 
-    res.status(200).json({ user, token });
+    res
+      .cookie("jwt", token, {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ user });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -32,10 +38,24 @@ const signup = async (req, res) => {
     //create token:
     const token = genToken(user._id);
 
-    res.status(200).json({ user, token });
+    res
+      .cookie("jwt", token, {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ user });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
+};
+
+//logout
+const logout = async (req, res) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+  });
+  res.end();
 };
 
 //update profile:
@@ -93,5 +113,6 @@ const profileUpdate = async (req, res) => {
 module.exports = {
   login,
   signup,
+  logout,
   profileUpdate,
 };
