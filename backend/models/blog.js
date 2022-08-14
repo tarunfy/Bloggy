@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 const blogSchema = new mongoose.Schema(
   {
-    blog: {
+    markDown: {
       type: String,
       required: true,
     },
+
     comments: {
       type: [
         {
@@ -14,8 +15,22 @@ const blogSchema = new mongoose.Schema(
         },
       ],
     },
+
     likes: {
       type: [String],
+    },
+
+    userId: {
+      type: String,
+    },
+
+    coverImage: {
+      type: String,
+    },
+
+    blogTitle: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
