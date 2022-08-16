@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  env: {
+    API_KEY: process.env.API_KEY,
+  },
   reactStrictMode: true,
   swcMinify: true,
+
   webpack(config, options) {
     config.module.rules.push({
       test: /\.mp3$/,

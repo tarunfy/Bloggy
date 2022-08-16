@@ -110,9 +110,23 @@ const profileUpdate = async (req, res) => {
   }
 };
 
+//get current user:
+const currentUser = async (req, res) => {
+  const { jwt: token } = req.cookie;
+
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+
+  if (!decodedToken) {
+    return res.status(400).json({ error: "Invalid token" });
+  }
+
+  res.status(200).json({ decodedToken });
+};
+
 module.exports = {
   login,
   signup,
   logout,
   profileUpdate,
+  currentUser,
 };

@@ -1,12 +1,12 @@
 import { Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import Option from "../components/Blog/Option";
-import Sidebar from "../components/Blog/Sidebar";
+import Sidebar from "../components/Blog/Sidebar/index";
 import Blog from "../components/Blog/Blog";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
-export default function Home({ news }) {
+export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [filterBy, setFilterBy] = useState("Relevant");
   return (
@@ -44,23 +44,9 @@ export default function Home({ news }) {
           )}
         </div>
         <div className="overflow-x-hidden w-full">
-          <Sidebar news={news} />
+          <Sidebar />
         </div>
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${process.env.API_KEY}`
-  );
-
-  const data = await res.json();
-
-  return {
-    props: {
-      news: data,
-    },
-  };
 }
