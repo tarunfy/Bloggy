@@ -30,9 +30,6 @@ export const useLogin = () => {
     }
 
     if (res.ok) {
-      //save the user to localstorage:
-      localStorage.setItem("user", JSON.stringify(data));
-
       //dispatch an action:
       dispatch({ type: "LOGIN", payload: data.user });
 

@@ -8,7 +8,7 @@ import Navbar from "../components/Navbar";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [filterBy, setFilterBy] = useState("Relevant");
   return (
     <div>
@@ -18,7 +18,7 @@ export default function Home() {
       />
       <Navbar />
       {/* Main */}
-      <div className="max-w-[1100px] mx-auto mt-28 grid gap-x-20 grid-cols-3">
+      <div className="max-w-[1100px] mb-4 mx-auto mt-28 grid gap-x-20 grid-cols-3">
         <div className="col-span-2 w-full flex items-start flex-col space-y-10">
           <div className="flex items-center justify-start space-x-10 text-2xl">
             <Option

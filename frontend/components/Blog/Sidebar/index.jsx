@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`flex max-w-sm items-start flex-col border-[1px] rounded-lg ${
+      className={`flex max-w-sm items-start  flex-col border-[1px] rounded-lg ${
         colorMode === "light"
           ? "!border-gray-300 !bg-white/50"
           : "!border-gray-50/70 !bg-[#2D3748]/50"

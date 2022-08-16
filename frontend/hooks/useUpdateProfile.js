@@ -26,15 +26,6 @@ export const useUpdateProfile = () => {
     }
 
     if (res.ok) {
-      const oldProfileData = JSON.parse(localStorage.getItem("user"));
-
-      const newProfileData = {
-        ...oldProfileData,
-        user: data.user,
-      };
-
-      localStorage.setItem("user", JSON.stringify(newProfileData));
-
       dispatch({ type: "UPDATE", payload: data.user });
 
       setIsLoading(false);

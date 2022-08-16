@@ -4,7 +4,7 @@ const NewsCardSkeleton = () => {
   return (
     <Box padding="2" boxShadow="lg">
       <Skeleton height="160px" borderRadius="10px" />
-      <SkeletonText mt="2" borderRadius={5} noOfLines={3} spacing="1" />
+      <SkeletonText mt="2" borderRadius={5} noOfLines={2} spacing="1" />
     </Box>
   );
 };

@@ -112,7 +112,11 @@ const profileUpdate = async (req, res) => {
 
 //get current user:
 const currentUser = async (req, res) => {
-  const { jwt: token } = req.cookie;
+  const { jwt: token } = req.cookies;
+
+  if (!token) {
+    return res.status(400).json({ error: "Token expired" });
+  }
 
   const decodedToken = jwt.verify(token, process.env.SECRET);
 
@@ -120,7 +124,9 @@ const currentUser = async (req, res) => {
     return res.status(400).json({ error: "Invalid token" });
   }
 
-  res.status(200).json({ decodedToken });
+  const user = await UserModel.findById(decodedToken._id);
+
+  res.status(200).json({ user });
 };
 
 module.exports = {

@@ -25,20 +25,24 @@ export const authReducer = (state, action) => {
 };
 
 export const AuthProvider = ({ children }) => {
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-
-    if (userInfo) {
-      dispatch({
-        type: "LOGIN",
-        payload: { ...userInfo.user, token: userInfo.token },
-      });
-    }
-  }, []);
-
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
   });
+  useEffect(() => {
+    //get current user:
+    async function getCurrentUser() {
+      const res = await fetch("/api/user/currentUser");
+
+      const data = await res.json();
+
+      if (res.ok) {
+        dispatch({ type: "LOGIN", payload: data.user });
+      } else {
+        dispatch({ type: "LOGOUT" });
+      }
+    }
+    getCurrentUser();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
