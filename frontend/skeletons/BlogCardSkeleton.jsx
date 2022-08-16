@@ -22,8 +22,19 @@ const BlogCardSkeleton = ({ banner }) => {
           <Box className="!flex !items-start">
             <SkeletonCircle size="12" />
             <Box className="w-full" mt={3}>
-              <Skeleton height="20px" width="20%" marginLeft="10px" />
-              <Skeleton height="40px" mt={5} width="90%" marginLeft="10px" />
+              <Skeleton
+                height="20px"
+                borderRadius={5}
+                width="20%"
+                marginLeft="10px"
+              />
+              <Skeleton
+                height="40px"
+                borderRadius={5}
+                mt={5}
+                width="90%"
+                marginLeft="10px"
+              />
             </Box>
           </Box>
         </Box>
