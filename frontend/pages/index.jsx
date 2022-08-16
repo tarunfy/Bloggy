@@ -1,5 +1,5 @@
-import { Spinner } from "@chakra-ui/react";
-import { useState } from "react";
+import { useToast } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import Option from "../components/Blog/Option";
 import Sidebar from "../components/Blog/Sidebar/index";
 import Blog from "../components/Blog/Blog";
@@ -8,8 +8,32 @@ import Navbar from "../components/Navbar";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [blogs, setBlogs] = useState(null);
   const [filterBy, setFilterBy] = useState("Relevant");
+
+  const toast = useToast();
+
+  useEffect(() => {
+    async function getBlogs() {
+      const res = await fetch("/api/blogs");
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setBlogs(data.blogs);
+      } else {
+        toast({
+          title: "Error",
+          description: data.error,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    }
+    getBlogs();
+  }, []);
+
   return (
     <div>
       <Layout
@@ -33,7 +57,7 @@ export default function Home() {
             />
             <Option filterBy={filterBy} setFilterBy={setFilterBy} name="Top" />
           </div>
-          {isLoading ? (
+          {blogs == null || blogs?.length == 0 ? (
             <div className="w-full space-y-2">
               <BlogCardSkeleton banner={true} />
               <BlogCardSkeleton />
@@ -47,8 +71,9 @@ export default function Home() {
             </div>
           ) : (
             <div className="w-full space-y-2">
-              <Blog img={true} />
-              <Blog />
+              {blogs.map((blog, index) => (
+                <Blog blog={blog} key={blog._id} index={index} />
+              ))}
             </div>
           )}
         </div>

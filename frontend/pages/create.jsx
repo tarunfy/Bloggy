@@ -27,7 +27,11 @@ const Create = () => {
       coverImage: coverImage ? coverImage : null,
       comments: null,
       likes: null,
-      userId: user._id,
+      userInfo: {
+        name: user.fullname,
+        userId: user._id,
+        profileImage: user.profileImage,
+      },
     });
     if (!error) {
       toast({
