@@ -5,7 +5,7 @@ import { Button, IconButton, useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import Profile from "./Profile";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
 const Navbar = () => {
   const [audio, setAudio] = useState(null);

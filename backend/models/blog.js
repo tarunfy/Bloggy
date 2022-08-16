@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const blogSchema = new mongoose.Schema(
   {
-    markDown: {
+    markdown: {
       type: String,
       required: true,
     },

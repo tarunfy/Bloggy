@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
 export const useUpdateProfile = () => {
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { user, dispatch } = useAuthContext();
 
   const updateProfile = async (profileData) => {
+    let error;
     setIsLoading(true);
-    setError("");
+
     const res = await fetch(`/api/user/${user._id}`, {
       method: "PUT",
       headers: {
@@ -21,16 +21,17 @@ export const useUpdateProfile = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error);
+      error = data.error;
       setIsLoading(false);
     }
 
     if (res.ok) {
       dispatch({ type: "UPDATE", payload: data.user });
-
       setIsLoading(false);
     }
+
+    return { error: error ? error : null };
   };
 
-  return { error, isLoading, updateProfile };
+  return { isLoading, updateProfile };
 };

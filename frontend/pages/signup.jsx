@@ -2,10 +2,10 @@ import { Button, Center, Input, Spinner, useColorMode } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import Link from "next/link";
 import Image from "next/image";
-import { useSignup } from "../hooks/useSignup";
+import { useSignup } from "../hooks/Auth/useSignup";
 import { useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../hooks/Auth/useAuthContext";
 
 const Signup = () => {
   const usernameRef = useRef(null);

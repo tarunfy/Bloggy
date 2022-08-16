@@ -1,5 +1,3 @@
-import React from "react";
-
 const Option = ({ filterBy, setFilterBy, name }) => {
   return (
     <>

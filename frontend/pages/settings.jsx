@@ -15,16 +15,18 @@ import { useState, useRef, useEffect } from "react";
 import FileUpload from "../components/FileUpload";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useUpdateProfile } from "../hooks/useUpdateProfile";
+import { useAuthContext } from "../hooks/Auth/useAuthContext";
+import { useUpdateProfile } from "../hooks/Auth/useUpdateProfile";
 import { useRouter } from "next/router";
 
 const Settings = () => {
-  const { colorMode } = useColorMode();
   const [profileImage, setProfileImage] = useState("");
+  const [error, setError] = useState("");
+
+  const { colorMode } = useColorMode();
 
   const { user } = useAuthContext();
-  const { error, isLoading, updateProfile } = useUpdateProfile();
+  const { isLoading, updateProfile } = useUpdateProfile();
 
   const toast = useToast();
 
@@ -70,13 +72,21 @@ const Settings = () => {
       github: githubHandleRef.current.value,
       websiteUrl: websiteUrlRef.current.value,
     };
-    await updateProfile(data);
-    if (error) {
+    const { error } = await updateProfile(data);
+    if (!error) {
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
       toast({
         title: "Error",
         description: error,
         status: "error",
-        duration: 2500,
+        duration: 3000,
         isClosable: true,
       });
     }

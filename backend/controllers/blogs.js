@@ -37,7 +37,7 @@ const getBlog = async (req, res) => {
 const createBlog = async (req, res) => {
   const emptyFields = [];
 
-  if (!req.body.markDown) {
+  if (!req.body.markdown) {
     emptyFields.push("markdown");
   }
 

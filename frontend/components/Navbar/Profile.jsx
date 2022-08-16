@@ -8,8 +8,8 @@ import {
   Avatar,
   MenuDivider,
 } from "@chakra-ui/react";
-import { useLogout } from "../../hooks/useLogout";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useLogout } from "../../hooks/Auth/useLogout";
+import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
 const Profile = () => {
   const logout = useLogout();

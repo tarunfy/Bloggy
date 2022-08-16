@@ -38,6 +38,10 @@ const nextConfig = {
         source: "/api/user/:userId",
         destination: "http://localhost:4000/api/user/:userId", // Proxy to Backend
       },
+      {
+        source: "/api/blogs/create",
+        destination: "http://localhost:4000/api/blogs/create", // Proxy to Backend
+      },
     ];
   },
 };

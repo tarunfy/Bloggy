@@ -12,7 +12,7 @@ import { RiCake2Line } from "react-icons/ri";
 import { FiMail } from "react-icons/fi";
 import { BsGlobe } from "react-icons/bs";
 import { FaGithub, FaTwitter } from "react-icons/fa";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../hooks/Auth/useAuthContext";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
