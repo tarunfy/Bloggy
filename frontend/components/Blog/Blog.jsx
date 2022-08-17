@@ -3,10 +3,28 @@ import { BsSuitHeart } from "react-icons/bs";
 import { AiOutlineComment } from "react-icons/ai";
 import Link from "next/link";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 const Blog = ({ blog, index }) => {
-  //check if the index is 0 of this element and if it is then show banner img if there is one.
+  const [createdBy, setCreatedBy] = useState(null);
   const { colorMode } = useColorMode();
+
+  useEffect(() => {
+    async function getUser() {
+      const res = await fetch(`api/user/${blog.userId}`);
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setCreatedBy(data.user);
+      } else {
+        return;
+      }
+    }
+    if (blog) {
+      getUser();
+    }
+  }, []);
 
   return (
     <>
@@ -31,12 +49,12 @@ const Blog = ({ blog, index }) => {
           <div className="flex items-start justify-start space-x-2 p-4">
             <Avatar
               size="md"
-              name={blog?.userInfo?.name}
-              src={blog?.userInfo?.profileImage}
+              name={createdBy?.fullname}
+              src={createdBy?.profileImage}
             />
 
             <div>
-              <h5>{blog?.userInfo?.name}</h5>
+              <h5>{createdBy?.fullname}</h5>
               <p className="text-xs">
                 {moment(blog?.createdAt).startOf("ss").fromNow()}
               </p>
@@ -76,7 +94,6 @@ const Blog = ({ blog, index }) => {
                 >
                   <AiOutlineComment />
                   <p>
-                    {" "}
                     {!blog.comments || blog.comments?.length === 0
                       ? 0
                       : blog.comments.length}{" "}

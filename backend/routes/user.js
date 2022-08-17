@@ -5,6 +5,7 @@ const {
   profileUpdate,
   logout,
   currentUser,
+  findUser,
 } = require("../controllers/user");
 
 //signup
@@ -19,7 +20,10 @@ Router.get("/logout", logout);
 //update profile:
 Router.put("/:userId", profileUpdate);
 
-//Get user:
+//Get userCurrent:
 Router.get("/currentUser", currentUser);
+
+//Get user:
+Router.get("/:userId", findUser);
 
 module.exports = Router;

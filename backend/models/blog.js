@@ -20,12 +20,9 @@ const blogSchema = new mongoose.Schema(
       type: [String],
     },
 
-    userInfo: {
-      type: {
-        name: String,
-        profileImage: String,
-        userId: String,
-      },
+    userId: {
+      type: String,
+      required: true,
     },
 
     coverImage: {

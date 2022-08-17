@@ -57,7 +57,7 @@ export default function Home() {
             />
             <Option filterBy={filterBy} setFilterBy={setFilterBy} name="Top" />
           </div>
-          {blogs == null || blogs?.length == 0 ? (
+          {blogs == null ? (
             <div className="w-full space-y-2">
               <BlogCardSkeleton banner={true} />
               <BlogCardSkeleton />
@@ -71,9 +71,17 @@ export default function Home() {
             </div>
           ) : (
             <div className="w-full space-y-2">
-              {blogs.map((blog, index) => (
-                <Blog blog={blog} key={blog._id} index={index} />
-              ))}
+              {blogs.length > 0 ? (
+                <>
+                  {blogs.map((blog, index) => (
+                    <Blog blog={blog} key={blog._id} index={index} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <p className="text-2xl text-center">No blogs found</p>
+                </>
+              )}
             </div>
           )}
         </div>
