@@ -28,8 +28,10 @@ const Edit = () => {
         return;
       }
     }
-    getBlogData();
-  }, []);
+    if (router.query.blogId) {
+      getBlogData();
+    }
+  }, [router.query.blogId]);
 
   return (
     <div>

@@ -62,7 +62,10 @@ const Edit = ({
         />
         <textarea
           value={markdown}
-          onChange={(e) => setMarkdown(e.target.value)}
+          onChange={(e) => {
+            setMarkdown(e.target.value);
+            handleTextareaSize(e);
+          }}
           placeholder="Write your post content here...."
           className="resize-none w-full border-none focus:border-none bg-transparent text-md focus:outline-none"
           onKeyUp={(e) => handleTextareaSize(e)}

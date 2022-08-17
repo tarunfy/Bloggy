@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 export const useSignup = () => {
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { dispatch } = useAuthContext();
 
   const signup = async (email, password, username, fullname) => {
+    let error;
     setIsLoading(true);
-    setError("");
 
     const res = await fetch("/api/user/signup", {
       method: "POST",
@@ -27,8 +26,9 @@ export const useSignup = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error);
+      error = data.error;
       setIsLoading(false);
+      return error;
     }
 
     if (res.ok) {
@@ -39,5 +39,5 @@ export const useSignup = () => {
     }
   };
 
-  return { error, isLoading, signup };
+  return { isLoading, signup };
 };

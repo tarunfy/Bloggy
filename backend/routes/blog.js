@@ -1,4 +1,6 @@
 const Router = require("express").Router();
+const authCheck = require("../middlewares/authCheck");
+
 const {
   getBlog,
   getBlogs,
@@ -14,17 +16,17 @@ Router.get("/:blogId", getBlog);
 Router.get("/", getBlogs);
 
 //get user's blogs:
-Router.get("/user/personal", getPersonalBlogs);
+Router.get("/user/personal", authCheck, getPersonalBlogs);
 
 //create a new blog:
-Router.post("/create", createBlog);
+Router.post("/create", authCheck, createBlog);
 
 //update a blog:
-Router.patch("/:blogId", (req, res) => {
+Router.put("/:blogId", authCheck, (req, res) => {
   res.json({ mssg: `update the blog ${req.params.blogId}` });
 });
 
 //delete a blog:
-Router.delete("/:blogId", deleteBlog);
+Router.delete("/:blogId", authCheck, deleteBlog);
 
 module.exports = Router;

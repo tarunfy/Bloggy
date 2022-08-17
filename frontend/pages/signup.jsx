@@ -1,4 +1,11 @@
-import { Button, Center, Input, Spinner, useColorMode } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Input,
+  Spinner,
+  useColorMode,
+  useToast,
+} from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,7 +24,9 @@ const Signup = () => {
 
   const router = useRouter();
 
-  const { error, isLoading, signup } = useSignup();
+  const toast = useToast();
+
+  const { isLoading, signup } = useSignup();
 
   const { user } = useAuthContext();
 
@@ -29,21 +38,25 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(
+    const error = await signup(
       emailRef.current.value,
       passwordRef.current.value,
       usernameRef.current.value,
       fullnameRef.current.value
     );
+    if (error) {
+      toast({
+        title: "Error",
+        description: error,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      router.push("/");
+    }
   };
 
-  if (isLoading) {
-    return (
-      <Center h="100vh" w="100vw">
-        <Spinner size="lg" />
-      </Center>
-    );
-  }
   if (user) {
     return (
       <Center w="100vw" h="100vh">
@@ -124,7 +137,6 @@ const Signup = () => {
               <Link href="/login">Log in</Link>
             </span>
           </p>
-          {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
       </div>
     </div>
