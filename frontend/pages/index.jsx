@@ -64,10 +64,6 @@ export default function Home() {
               <BlogCardSkeleton />
               <BlogCardSkeleton />
               <BlogCardSkeleton />
-              <BlogCardSkeleton />
-              <BlogCardSkeleton />
-              <BlogCardSkeleton />
-              <BlogCardSkeleton />
             </div>
           ) : (
             <div className="w-full space-y-2">

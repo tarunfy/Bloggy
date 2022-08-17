@@ -2,14 +2,34 @@ import { Button, IconButton } from "@chakra-ui/react";
 import Editor from "../../../components/Edit";
 import Preview from "../../../components/Preview";
 import Layout from "../../../components/Layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CloseIcon } from "@chakra-ui/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Edit = () => {
   const [markdown, setMarkdown] = useState(``);
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    async function getBlogData() {
+      const res = await fetch(`/api/blogs/${router.query.blogId}`);
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setCoverImage(data.blog.coverImage);
+        setMarkdown(data.blog.markdown);
+        setTitle(data.blog.blogTitle);
+      } else {
+        return;
+      }
+    }
+    getBlogData();
+  }, []);
 
   return (
     <div>

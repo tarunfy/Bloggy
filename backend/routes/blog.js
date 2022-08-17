@@ -4,13 +4,17 @@ const {
   getBlogs,
   createBlog,
   deleteBlog,
+  getPersonalBlogs,
 } = require("../controllers/blogs");
 
 //get a blog:
 Router.get("/:blogId", getBlog);
 
-//get blogs:
+//get all blogs:
 Router.get("/", getBlogs);
+
+//get user's blogs:
+Router.get("/user/personal", getPersonalBlogs);
 
 //create a new blog:
 Router.post("/create", createBlog);

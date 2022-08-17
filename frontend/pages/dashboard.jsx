@@ -1,10 +1,8 @@
-import { useState } from "react";
 import Navbar from "../components/Navbar";
 import BlogCard from "../components/Card/BlogCard";
 import Layout from "../components/Layout";
 
-const Dashboard = () => {
-  const [blogs, setBlogs] = useState([1]);
+const Dashboard = ({ data }) => {
   return (
     <div>
       <Layout
@@ -14,12 +12,12 @@ const Dashboard = () => {
       <Navbar />
       <div className="mt-44 max-w-[1000px] mx-auto">
         <h1 className="text-3xl font-semibold mb-5">
-          Your Blogs ({blogs.length})
+          Your Blogs ({data?.blogs?.length})
         </h1>
         <ul className="space-y-5">
-          {blogs.map((item, index) => (
+          {data?.blogs?.map((blog, index) => (
             <li key={index}>
-              <BlogCard />
+              <BlogCard blog={blog} />
             </li>
           ))}
         </ul>
@@ -29,3 +27,21 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+export const getServerSideProps = async (context) => {
+  const token = context.req.headers.cookie.split("=")[1];
+
+  const res = await fetch("http://localhost:4000/api/blogs/user/personal", {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};

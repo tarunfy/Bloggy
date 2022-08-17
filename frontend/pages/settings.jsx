@@ -21,7 +21,6 @@ import { useRouter } from "next/router";
 
 const Settings = () => {
   const [profileImage, setProfileImage] = useState("");
-  const [error, setError] = useState("");
 
   const { colorMode } = useColorMode();
 

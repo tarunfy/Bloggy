@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const BlogModel = require("../models/blog");
 
 //get all blogs:
@@ -79,6 +80,25 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+//get user's blogs:
+const getPersonalBlogs = async (req, res) => {
+  const userId = req.userId;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: "No user found with that id" });
+  }
+
+  try {
+    const userBlogs = await BlogModel.find({
+      userId,
+    });
+
+    res.status(200).json({ blogs: userBlogs });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 //update a blog:
 //export const updateBlog = async ( req, res ) =>
 //{
@@ -103,4 +123,5 @@ module.exports = {
   getBlogs,
   createBlog,
   deleteBlog,
+  getPersonalBlogs,
 };
