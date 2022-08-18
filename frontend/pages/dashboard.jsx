@@ -29,12 +29,13 @@ const Dashboard = ({ data }) => {
 export default Dashboard;
 
 export const getServerSideProps = async (context) => {
-  const token = context.req.headers.cookie.split("=")[1];
+  const { jwt } = context.req.cookies;
 
   const res = await fetch("http://localhost:4000/api/blogs/user/personal", {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${jwt}`,
     },
+    credentials: "include",
   });
 
   const data = await res.json();

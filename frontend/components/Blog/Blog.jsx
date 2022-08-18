@@ -39,7 +39,7 @@ const Blog = ({ blog, index }) => {
           }`}
         >
           {index === 0 && blog.coverImage && (
-            <div className=" bg-[#DDDDDD] h-60 !w-full relative">
+            <div className=" bg-[#DDDDDD] rounded-tr-lg rounded-tl-lg  h-60 !w-full relative">
               <Image
                 layout="fill"
                 className="!object-cover rounded-tr-lg rounded-tl-lg "

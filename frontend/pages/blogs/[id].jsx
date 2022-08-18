@@ -7,7 +7,10 @@ import styles from "../../components/Preview/Preview.module.css";
 import * as Showdown from "showdown";
 import AddComment from "../../components/Modals/AddComment";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import moment from "moment";
+import { useRouter } from "next/router";
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -16,15 +19,16 @@ const converter = new Showdown.Converter({
   tasklists: true,
 });
 
-const s =
-  "# A demo of `react-markdown`\n\n`react-markdown` is a markdown component for React.\n\n👉 Changes are re-rendered as you type.\n\n👈 Try writing some markdown on the left.\n\n## Overview\n\n* Follows [CommonMark](https://commonmark.org)\n* Optionally follows [GitHub Flavored Markdown](https://github.github.com/gfm/)\n* Renders actual React elements instead of using `dangerouslySetInnerHTML`\n* Lets you define your own components (to render `MyHeading` instead of `h1`)\n* Has a lot of plugins\n\n## Table of contents\nHere is an example of a plugin in action\n\n([`remark-toc`](https://github.com/remarkjs/remark-toc))\nThis section is replaced by an actual table of contents.\n\n## Syntax highlighting\nHere is an example of a plugin to highlight code:\n[`rehype-highlight`](https://github.com/rehypejs/rehype-highlight).\n```js\nimport React from 'react'\nimport ReactDOM from 'react-dom'\nimport ReactMarkdown from 'react-markdown'\nimport rehypeHighlight from 'rehype-highlight'\nReactDOM.render(\n<ReactMarkdown rehypePlugins={[rehypeHighlight]}>\n{'# Your markdown here'}\n</ReactMarkdown>\ndocument.querySelector('#content'))\n```\n\nPretty neat, eh?\n\n## GitHub flavored markdown (GFM)\n\nFor GFM, you can *also* use a plugin:[`remark-gfm`](https://github.com/remarkjs/react-markdown#use).It adds support for GitHub-specific extensions to the language:tables, strikethrough, tasklists, and literal URLs.\n\nThese features **do not work by default**.👆 Use the toggle above to add the plugin.| Feature    | Support              |\n| ---------: | :------------------- |\n| CommonMark | 100%                 |\n| GFM        | 100% w/ `remark-gfm` |\n\n~~strikethrough~~\n\n* [ ] task list\n* [x] checked item\n\nhttps://example.com\n## HTML in markdown";
-
-const text = converter.makeHtml(s);
-
-const Details = () => {
+const Details = ({ blog, userData }) => {
+  const [blogData, setBlogData] = useState(blog);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(2);
   const { colorMode } = useColorMode();
+  const [comments, setComments] = useState(null);
+
+  const router = useRouter();
+
+  const markdown = converter.makeHtml(blogData.markdown);
 
   const handleLike = () => {
     setLiked(!liked);
@@ -32,7 +36,15 @@ const Details = () => {
     setLikes(liked ? likes - 1 : likes + 1);
   };
 
-  //check if we have any banner img then only disply it.
+  useEffect(() => {
+    async function getComments() {
+      const res = await fetch(`/api/blogs/comments/${router.query.id}`);
+      const { comments } = await res.json();
+
+      setComments(comments);
+    }
+    getComments();
+  }, []);
 
   return (
     <div>
@@ -48,32 +60,39 @@ const Details = () => {
             : "!border-gray-50/70 !bg-[#2D3748]/50"
         }`}
       >
-        <img
-          src="/images/test.webp"
-          alt="Banner img"
-          className="object-cover bg-[#DDDDDD] h-[20rem] !w-full rounded-tr-lg rounded-tl-lg"
-        />
+        {blogData.coverImage && (
+          <div className=" bg-[#DDDDDD] !h-[20rem] !w-full rounded-tr-lg rounded-tl-lg relative">
+            <Image
+              layout="fill"
+              src={blogData.coverImage}
+              alt="Banner img"
+              className="object-cover rounded-tr-lg rounded-tl-lg"
+            />
+          </div>
+        )}
         <div className="py-4 px-14">
           <div className="flex space-x-2">
             <Avatar
               size="md"
-              name="Tarun Sharma"
-              src="https://bit.ly/dan-abramov"
+              name={userData.fullname}
+              src={userData.profileImage}
             />
             <div>
-              <h4 className="font-semibold">Tarun Sharma</h4>
-              <p className="text-xs">Posted on 10 Aug</p>
+              <h4 className="font-semibold">{userData.fullname}</h4>
+              <p className="text-xs">
+                Posted on {moment(blogData.createdAt).date()}{" "}
+                {moment(blogData?.createdAt).format("MMMM")}
+              </p>
             </div>
           </div>
 
           <div className="mt-5 space-y-4">
             <h1 className="text-5xl font-bold leading-[60px]">
-              How to connect your flask application to AWS RDS with a CI/CD
-              pipeline
+              {blogData.blogTitle}
             </h1>
             <div
               className={`${styles.custommdLight}`}
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(text) }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(markdown) }}
             />
           </div>
         </div>
@@ -100,13 +119,37 @@ const Details = () => {
             : "!border-gray-50/70 !bg-[#2D3748]/50"
         }`}
       >
-        <ul className="space-y-3 divide-y">
-          <Comment />
-        </ul>
-        {/*<p className="text-center">No comments yet...</p>*/}
+        {comments?.length > 0 ? (
+          <ul className="space-y-3 divide-y">
+            <Comment />
+          </ul>
+        ) : (
+          <p className="text-center">No comments yet...</p>
+        )}
       </div>
     </div>
   );
 };
 
 export default Details;
+
+export const getServerSideProps = async (context) => {
+  const { id } = context.params;
+
+  const res = await fetch(`http://localhost:4000/api/blogs/${id}`);
+
+  const data = await res.json();
+
+  const res2 = await fetch(
+    `http://localhost:4000/api/user/${data.blog.userId}`
+  );
+
+  const { user } = await res2.json();
+
+  return {
+    props: {
+      blog: data.blog,
+      userData: user,
+    },
+  };
+};

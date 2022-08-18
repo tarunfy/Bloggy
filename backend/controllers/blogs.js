@@ -20,7 +20,10 @@ const getBlog = async (req, res) => {
   }
 
   try {
-    const blog = await BlogModel.findById(blogId);
+    const blog = await BlogModel.findById(blogId, {
+      comments: 0,
+      likes: 0,
+    });
 
     if (!blog) {
       res.status(404).json({ error: "Blog not found" });
@@ -118,6 +121,23 @@ const updateBlog = async (req, res) => {
   }
 };
 
+//get blog's comments:
+const getComments = async (req, res) => {
+  const { blogId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(blogId)) {
+    return res.status(400).json({ error: "Blog not found" });
+  }
+
+  try {
+    const blog = await BlogModel.findById(blogId);
+
+    res.status(200).json({ comments: blog.comments });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getBlog,
   getBlogs,
@@ -125,4 +145,5 @@ module.exports = {
   deleteBlog,
   getPersonalBlogs,
   updateBlog,
+  getComments,
 };

@@ -8,6 +8,7 @@ const {
   deleteBlog,
   getPersonalBlogs,
   updateBlog,
+  getComments,
 } = require("../controllers/blogs");
 
 //get a blog:
@@ -27,5 +28,8 @@ Router.put("/:blogId", authCheck, updateBlog);
 
 //delete a blog:
 Router.delete("/:blogId", authCheck, deleteBlog);
+
+//get blog's comments:
+Router.get("/comments/:blogId", getComments);
 
 module.exports = Router;

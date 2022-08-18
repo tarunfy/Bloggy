@@ -25,8 +25,8 @@ const Create = () => {
       blogTitle: title,
       markdown,
       coverImage: coverImage ? coverImage : null,
-      comments: null,
-      likes: null,
+      comments: [],
+      likes: [],
       userId: user._id,
     });
     if (!error) {
