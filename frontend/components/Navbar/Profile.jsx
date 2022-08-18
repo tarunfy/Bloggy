@@ -20,7 +20,7 @@ const Profile = () => {
         <Avatar size="md" name={user.fullname} src={user?.profileImage} />
       </MenuButton>
       <MenuList>
-        <Link href={`/${user.username}`}>
+        <Link href={`/users/${user._id}`}>
           <a>
             <MenuItem>@{user.username}</MenuItem>
           </a>
