@@ -100,23 +100,23 @@ const getPersonalBlogs = async (req, res) => {
 };
 
 //update a blog:
-//export const updateBlog = async ( req, res ) =>
-//{
-//	const blogId = req.params.blogId;
+const updateBlog = async (req, res) => {
+  const blogId = req.params.blogId;
 
-//	if ( !mongoose.Types.ObjectId.isValid( blogId ) )
-//	{
-//		return res.status( 400 ).json( { error: 'Blog not found' } );
-//	};
+  if (!mongoose.Types.ObjectId.isValid(blogId)) {
+    return res.status(400).json({ error: "Blog not found" });
+  }
 
-//	try
-//	{
-//		const updatedBlog =
-//	} catch ( err )
-//	{
-//		res.status( 400 ).json( { error: err.message } );
-//	}
-//}
+  try {
+    const updatedBlog = await BlogModel.findByIdAndUpdate(blogId, req.body, {
+      new: true,
+    });
+
+    res.status(200).json({ updatedBlog });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
 
 module.exports = {
   getBlog,
@@ -124,4 +124,5 @@ module.exports = {
   createBlog,
   deleteBlog,
   getPersonalBlogs,
+  updateBlog,
 };

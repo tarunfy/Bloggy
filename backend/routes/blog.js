@@ -7,6 +7,7 @@ const {
   createBlog,
   deleteBlog,
   getPersonalBlogs,
+  updateBlog,
 } = require("../controllers/blogs");
 
 //get a blog:
@@ -22,9 +23,7 @@ Router.get("/user/personal", authCheck, getPersonalBlogs);
 Router.post("/create", authCheck, createBlog);
 
 //update a blog:
-Router.put("/:blogId", authCheck, (req, res) => {
-  res.json({ mssg: `update the blog ${req.params.blogId}` });
-});
+Router.put("/:blogId", authCheck, updateBlog);
 
 //delete a blog:
 Router.delete("/:blogId", authCheck, deleteBlog);
