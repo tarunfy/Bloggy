@@ -1,6 +1,7 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { IconButton, useColorMode } from "@chakra-ui/react";
 import FileUpload from "../FileUpload";
+import Image from "next/image";
 
 const Edit = ({
   markdown,
@@ -28,11 +29,14 @@ const Edit = ({
       <div className="w-full space-y-4">
         {coverImage ? (
           <div className="w-full flex items-center space-x-5">
-            <img
-              src={coverImage}
-              alt="cover image"
-              className="h-[100px] w-full object-cover"
-            />
+            <div className="h-[100px] w-full relative">
+              <Image
+                src={coverImage}
+                alt="cover image"
+                layout="fill"
+                className="object-cover"
+              />
+            </div>
             <FileUpload
               text="Change image"
               setCoverImage={setCoverImage}

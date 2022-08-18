@@ -1,6 +1,7 @@
 import { useColorMode } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Image from "next/image";
 
 import styles from "./Preview.module.css";
 
@@ -18,11 +19,14 @@ const Preview = ({ markdown, title, coverImage }) => {
       }`}
     >
       {coverImage && (
-        <img
-          src={coverImage}
-          alt="cover image"
-          className="h-[100px] w-full object-cover"
-        />
+        <div className="h-[100px] w-full relative">
+          <Image
+            src={coverImage}
+            alt="cover image"
+            layout="fill"
+            className="object-cover"
+          />
+        </div>
       )}
       <h1 className="!text-4xl">{title}</h1>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>

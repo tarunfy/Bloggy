@@ -4,6 +4,8 @@ import { AiOutlineComment } from "react-icons/ai";
 import Link from "next/link";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+//import Image from "next/image";
 
 const Blog = ({ blog, index }) => {
   const [createdBy, setCreatedBy] = useState(null);
@@ -28,7 +30,7 @@ const Blog = ({ blog, index }) => {
 
   return (
     <>
-      <Link href={`/details/${blog._id}`}>
+      <Link href={`/blogs/${blog._id}`}>
         <div
           className={`w-full rounded-lg border-[1px] cursor-pointer ${
             colorMode === "light"
@@ -37,13 +39,14 @@ const Blog = ({ blog, index }) => {
           }`}
         >
           {index === 0 && blog.coverImage && (
-            <>
-              <img
+            <div className=" bg-[#DDDDDD] h-60 !w-full relative">
+              <Image
+                layout="fill"
+                className="!object-cover rounded-tr-lg rounded-tl-lg "
                 src={blog.coverImage}
                 alt="Blog banner"
-                className="object-cover bg-[#DDDDDD] h-60 !w-full rounded-tr-lg rounded-tl-lg"
               />
-            </>
+            </div>
           )}
 
           <div className="flex items-start justify-start space-x-2 p-4">
