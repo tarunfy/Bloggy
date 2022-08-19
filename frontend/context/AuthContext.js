@@ -1,3 +1,4 @@
+import { Center, Spinner } from "@chakra-ui/react";
 import { createContext, useEffect, useReducer } from "react";
 
 export const AuthContext = createContext(null);
@@ -6,26 +7,33 @@ export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
+        ...state,
         user: action.payload,
+        loading: false,
       };
 
     case "LOGOUT":
       return {
+        ...state,
         user: null,
+        loading: false,
       };
 
     case "UPDATE":
       return {
+        ...state,
         user: action.payload,
+        loading: false,
       };
 
     default:
-      return state;
+      return { ...state };
   }
 };
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
+    loading: true,
     user: null,
   });
   useEffect(() => {
@@ -43,6 +51,13 @@ export const AuthProvider = ({ children }) => {
     }
     getCurrentUser();
   }, []);
+
+  if (state.loading)
+    return (
+      <Center h="100vh" w="100vw">
+        <Spinner size="xl" />
+      </Center>
+    );
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

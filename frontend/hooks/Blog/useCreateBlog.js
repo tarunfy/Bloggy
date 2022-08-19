@@ -26,7 +26,6 @@ export const useCreateBlog = () => {
     }
 
     if (res.ok) {
-      dispatch({ type: "ADD", payload: data.blog });
       setIsLoading(false);
     }
 

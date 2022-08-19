@@ -10,7 +10,7 @@ const blogSchema = new mongoose.Schema(
     comments: {
       type: [
         {
-          user: String,
+          userId: String,
           comment: String,
         },
       ],

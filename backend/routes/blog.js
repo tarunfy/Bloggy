@@ -9,6 +9,7 @@ const {
   getPersonalBlogs,
   updateBlog,
   getComments,
+  blogLikes,
 } = require("../controllers/blogs");
 
 //get a blog:
@@ -31,5 +32,8 @@ Router.delete("/:blogId", authCheck, deleteBlog);
 
 //get blog's comments:
 Router.get("/comments/:blogId", getComments);
+
+//like or dislike a blog:
+Router.put("/:blogId/likes", authCheck, blogLikes);
 
 module.exports = Router;

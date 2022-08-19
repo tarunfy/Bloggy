@@ -11,13 +11,17 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
+import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
 const AddComment = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState("");
+
+  const { user } = useAuthContext();
   return (
     <>
       <Button
+        disabled={!user}
         onClick={onOpen}
         className="hover:!bg-[#4A18D7] !bg-[#5d2ee0] text-white"
       >

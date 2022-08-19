@@ -22,7 +22,6 @@ const getBlog = async (req, res) => {
   try {
     const blog = await BlogModel.findById(blogId, {
       comments: 0,
-      likes: 0,
     });
 
     if (!blog) {
@@ -138,6 +137,45 @@ const getComments = async (req, res) => {
   }
 };
 
+const blogLikes = async (req, res) => {
+  const { userId } = req.body;
+  const { blogId } = req.params;
+
+  try {
+    //check if userId is already present in that blog's likes:
+    const blog = await BlogModel.findById(blogId);
+
+    if (!blog.likes.includes(userId)) {
+      const updatedBlog = await BlogModel.findByIdAndUpdate(
+        blogId,
+        {
+          $push: {
+            likes: [userId],
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ blog: updatedBlog });
+    }
+
+    if (blog.likes.includes(userId)) {
+      const updatedBlog = await BlogModel.findByIdAndUpdate(
+        blogId,
+        {
+          $pull: {
+            likes: userId,
+          },
+        },
+        { new: true }
+      );
+      res.status(200).json({ blog: updatedBlog });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getBlog,
   getBlogs,
@@ -146,4 +184,5 @@ module.exports = {
   getPersonalBlogs,
   updateBlog,
   getComments,
+  blogLikes,
 };

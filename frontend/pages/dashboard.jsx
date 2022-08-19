@@ -1,8 +1,15 @@
 import Navbar from "../components/Navbar";
 import BlogCard from "../components/Card/BlogCard";
 import Layout from "../components/Layout";
+import { useEffect } from "react";
+import { useBlogContext } from "../hooks/Blog/useBlogContext";
 
 const Dashboard = ({ data }) => {
+  const { dispatch } = useBlogContext();
+
+  useEffect(() => {
+    dispatch({ type: "ADD", payload: data.blogs });
+  }, []);
   return (
     <div>
       <Layout

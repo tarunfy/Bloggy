@@ -80,12 +80,7 @@ const Blog = ({ blog, index }) => {
                   variant="ghost"
                 >
                   <BsSuitHeart />
-                  <p>
-                    {!blog.likes || blog.likes?.length === 0
-                      ? 0
-                      : blog.likes.length}{" "}
-                    likes
-                  </p>
+                  <p>{blog.likes.length} likes</p>
                 </div>
                 <div
                   className={`flex  p-2 rounded-lg items-center space-x-2  text-lg ${
@@ -96,12 +91,7 @@ const Blog = ({ blog, index }) => {
                   variant="ghost"
                 >
                   <AiOutlineComment />
-                  <p>
-                    {!blog.comments || blog.comments?.length === 0
-                      ? 0
-                      : blog.comments.length}{" "}
-                    comments
-                  </p>
+                  <p>{blog.comments.length} comments</p>
                 </div>
               </div>
             </div>

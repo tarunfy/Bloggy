@@ -12,6 +12,7 @@ import Image from "next/image";
 import moment from "moment";
 import { useRouter } from "next/router";
 import ProfileCard from "../../components/Card/ProfileCard";
+import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -21,21 +22,35 @@ const converter = new Showdown.Converter({
 });
 
 const Details = ({ blog, userData }) => {
+  const { user } = useAuthContext();
   const [blogData, setBlogData] = useState(blog);
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(2);
-  const { colorMode } = useColorMode();
+  const [liked, setLiked] = useState(blog?.likes.includes(user?._id));
+  const [likes, setLikes] = useState(blog.likes.length);
   const [comments, setComments] = useState(null);
+
+  const { colorMode } = useColorMode();
 
   const router = useRouter();
 
   const markdown = converter.makeHtml(blogData.markdown);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     setLiked(!liked);
-
     setLikes(liked ? likes - 1 : likes + 1);
+    await fetch(`/api/blogs/${router.query.id}/likes`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user._id,
+      }),
+    });
   };
+
+  useEffect(() => {
+    async function updateLikes() {}
+  });
 
   useEffect(() => {
     async function getComments() {
@@ -106,6 +121,7 @@ const Details = ({ blog, userData }) => {
           <Button
             variant="outline"
             onClick={handleLike}
+            disabled={!user}
             className="!flex !items-center !space-x-1"
           >
             {liked ? <BsSuitHeartFill fill="red" /> : <BsSuitHeart />}{" "}
