@@ -70,7 +70,7 @@ const BlogCard = ({ blog }) => {
             Edit
           </Button>
         </Link>
-        <DeleteBlogModal />
+        <DeleteBlogModal blogId={blog._id} />
       </div>
     </div>
   );
