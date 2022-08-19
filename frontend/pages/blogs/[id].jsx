@@ -128,7 +128,7 @@ const Details = ({ blog, userData }) => {
             <p> {likes}</p>
           </Button>
 
-          <AddComment />
+          <AddComment blogId={router.query.id} />
         </div>
         <div className="max-w-[800px] mx-auto mt-5 mb-3 flex items-center justify-between">
           <h1 className="text-2xl font-medium">All comments</h1>
@@ -142,7 +142,9 @@ const Details = ({ blog, userData }) => {
         >
           {comments?.length > 0 ? (
             <ul className="space-y-3 divide-y">
-              <Comment />
+              {comments.map((comment, index) => (
+                <Comment comment={comment} key={index} />
+              ))}
             </ul>
           ) : (
             <p className="text-center">No comments yet...</p>

@@ -58,6 +58,10 @@ const nextConfig = {
         source: "/api/blogs/:blogId/likes",
         destination: "http://localhost:4000/api/blogs/:blogId/likes", // Proxy to Backend
       },
+      {
+        source: "/api/blogs/:blogId/comment",
+        destination: "http://localhost:4000/api/blogs/:blogId/comment", // Proxy to Backend
+      },
     ];
   },
 };

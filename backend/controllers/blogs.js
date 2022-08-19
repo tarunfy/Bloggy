@@ -176,6 +176,26 @@ const blogLikes = async (req, res) => {
   }
 };
 
+//Add comment:
+const addComment = async (req, res) => {
+  const { userId, comment } = req.body;
+  const { blogId } = req.params;
+
+  try {
+    const updatedBlog = await BlogModel.findByIdAndUpdate(blogId, {
+      $push: {
+        comments: {
+          userId,
+          comment,
+        },
+      },
+    });
+    res.status(200).json({ blog: updatedBlog });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getBlog,
   getBlogs,
@@ -185,4 +205,5 @@ module.exports = {
   updateBlog,
   getComments,
   blogLikes,
+  addComment,
 };

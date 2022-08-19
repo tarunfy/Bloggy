@@ -13,11 +13,31 @@ import {
 } from "@chakra-ui/react";
 import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
-const AddComment = () => {
+const AddComment = ({ blogId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comment, setComment] = useState("");
 
   const { user } = useAuthContext();
+
+  const handleClick = async () => {
+    const res = await fetch(`/api/blogs/${blogId}/comment`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user._id,
+        comment,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      console.log(data.blog);
+    }
+  };
+
   return (
     <>
       <Button
@@ -56,6 +76,7 @@ const AddComment = () => {
                 Cancel
               </Button>
               <Button
+                onClick={handleClick}
                 type="submit"
                 disabled={!comment}
                 colorScheme="red"
