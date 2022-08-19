@@ -8,7 +8,7 @@ const authCheck = async (req, res, next) => {
 
   if (token) {
     const decodedData = jwt.decode(token, process.env.SECRET);
-    id = decodedData._id;
+    id = decodedData?._id;
   }
 
   if (cookies.jwt || token) {

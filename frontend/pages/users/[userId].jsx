@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Center,
-  Spinner,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Avatar, Button, useColorMode } from "@chakra-ui/react";
 import Navbar from "../../components/Navbar";
 import Layout from "../../components/Layout";
 import Link from "next/link";
@@ -13,30 +7,12 @@ import { FiMail } from "react-icons/fi";
 import { BsGlobe } from "react-icons/bs";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 import moment from "moment";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useAuthContext } from "../../hooks/Auth/useAuthContext";
 
 const Profile = ({ userData }) => {
   const { colorMode } = useColorMode();
 
-  const router = useRouter();
-
   const { user } = useAuthContext();
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-  }, [user]);
-
-  if (!user) {
-    return (
-      <Center w="100vw" h="100vh">
-        <Spinner size="lg" />
-      </Center>
-    );
-  }
 
   return (
     <div>
@@ -64,7 +40,7 @@ const Profile = ({ userData }) => {
             src={userData.profileImage}
           />
         </div>
-        {userData._id == user._id && (
+        {userData._id == user?._id && (
           <div className="w-full flex justify-end">
             <Link href="/settings">
               <a>

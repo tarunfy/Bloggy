@@ -3,13 +3,37 @@ import BlogCard from "../components/Card/BlogCard";
 import Layout from "../components/Layout";
 import { useEffect } from "react";
 import { useBlogContext } from "../hooks/Blog/useBlogContext";
+import { useAuthContext } from "../hooks/Auth/useAuthContext";
+import { useRouter } from "next/router";
+import { Center, Spinner } from "@chakra-ui/react";
 
 const Dashboard = ({ data }) => {
   const { dispatch } = useBlogContext();
 
+  const { user } = useAuthContext();
+
+  const router = useRouter();
+
   useEffect(() => {
-    dispatch({ type: "ADD", payload: data.blogs });
-  }, []);
+    if (user) {
+      dispatch({ type: "ADD", payload: data.blogs });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
+
+  if (!user) {
+    return (
+      <Center h="100vh" w="100vw">
+        <Spinner size="xl" />
+      </Center>
+    );
+  }
+
   return (
     <div>
       <Layout
