@@ -4,7 +4,7 @@ const BlogModel = require("../models/blog");
 //get all blogs:
 const getBlogs = async (req, res) => {
   try {
-    if (req.query.filterBy == "Relevant") {
+    if (req.query.filterBy == "Relevant" || !req.query.filterBy) {
       const blogs = await BlogModel.find({});
       res.status(200).json({ blogs });
     }

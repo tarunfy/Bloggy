@@ -6,12 +6,14 @@ import Blog from "../components/Blog/Blog";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
+import { useBlogContext } from "../hooks/Blog/useBlogContext";
 
 export default function Home() {
-  const [blogs, setBlogs] = useState(null);
   const [filterBy, setFilterBy] = useState("Relevant");
 
   const toast = useToast();
+
+  const { dispatch, blogs } = useBlogContext();
 
   useEffect(() => {
     async function getBlogs(filterBy) {
@@ -20,7 +22,7 @@ export default function Home() {
       const data = await res.json();
 
       if (res.ok) {
-        setBlogs(data.blogs);
+        dispatch({ type: "ADD", payload: data.blogs });
       } else {
         toast({
           title: "Error",

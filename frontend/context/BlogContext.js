@@ -25,7 +25,7 @@ export const blogReducer = (state, action) => {
 
 export const BlogProvider = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, {
-    blogs: [],
+    blogs: null,
   });
 
   return (

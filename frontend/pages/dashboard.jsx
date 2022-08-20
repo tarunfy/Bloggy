@@ -2,23 +2,14 @@ import Navbar from "../components/Navbar";
 import BlogCard from "../components/Card/BlogCard";
 import Layout from "../components/Layout";
 import { useEffect } from "react";
-import { useBlogContext } from "../hooks/Blog/useBlogContext";
 import { useAuthContext } from "../hooks/Auth/useAuthContext";
 import { useRouter } from "next/router";
 import { Center, Spinner } from "@chakra-ui/react";
 
 const Dashboard = ({ data }) => {
-  const { dispatch } = useBlogContext();
-
   const { user } = useAuthContext();
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (user) {
-      dispatch({ type: "ADD", payload: data.blogs });
-    }
-  }, [user]);
 
   useEffect(() => {
     if (!user) {
