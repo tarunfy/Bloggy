@@ -1,5 +1,6 @@
 import { Avatar } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const Comment = ({ comment }) => {
   const [commentedBy, setCommentedBy] = useState();
@@ -22,11 +23,15 @@ const Comment = ({ comment }) => {
       <h2>{comment.comment}</h2>
       <div className="flex items-center space-x-2">
         <p className="text-sm">~ {commentedBy?.fullname}</p>
-        <Avatar
-          size="sm"
-          name={commentedBy?.fullname}
-          src={commentedBy?.profileImage}
-        />
+        <Link href={`/users/${commentedBy?._id}`}>
+          <a>
+            <Avatar
+              size="sm"
+              name={commentedBy?.fullname}
+              src={commentedBy?.profileImage}
+            />
+          </a>
+        </Link>
       </div>
     </div>
   );

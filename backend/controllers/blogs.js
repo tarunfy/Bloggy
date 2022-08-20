@@ -4,8 +4,19 @@ const BlogModel = require("../models/blog");
 //get all blogs:
 const getBlogs = async (req, res) => {
   try {
-    const blogs = await BlogModel.find({});
-    res.status(200).json({ blogs });
+    if (req.query.filterBy == "Relevant") {
+      const blogs = await BlogModel.find({});
+      res.status(200).json({ blogs });
+    }
+    if (req.query.filterBy == "Latest") {
+      const blogs = await BlogModel.find({}).sort({ createdAt: -1 });
+      res.status(200).json({ blogs });
+    }
+
+    if (req.query.filterBy == "Top") {
+      const blogs = await BlogModel.find({}).sort({ likes: -1 });
+      res.status(200).json({ blogs });
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -14,8 +14,8 @@ export default function Home() {
   const toast = useToast();
 
   useEffect(() => {
-    async function getBlogs() {
-      const res = await fetch("/api/blogs");
+    async function getBlogs(filterBy) {
+      const res = await fetch(`/api/blogs?filterBy=${filterBy}`);
 
       const data = await res.json();
 
@@ -31,8 +31,8 @@ export default function Home() {
         });
       }
     }
-    getBlogs();
-  }, []);
+    getBlogs(filterBy);
+  }, [filterBy]);
 
   return (
     <div>
