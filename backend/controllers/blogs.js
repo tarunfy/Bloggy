@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const BlogModel = require("../models/blog");
 
 //get all blogs:

@@ -6,6 +6,7 @@ const {
   logout,
   currentUser,
   findUser,
+  cloudUpload,
 } = require("../controllers/user");
 
 //signup

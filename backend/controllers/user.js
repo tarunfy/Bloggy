@@ -1,6 +1,7 @@
 const UserModel = require("../models/user");
 const jwt = require("jsonwebtoken");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
+const cloudinary = require("../utils/cloudinary");
 
 //generate JWT:
 const genToken = (_id) => {
@@ -87,12 +88,27 @@ const profileUpdate = async (req, res) => {
       }
     }
 
+    let cloudinaryImgUrl;
+
+    if (req.body.profileImage) {
+      const uploadResponse = await cloudinary.uploader.upload(
+        req.body.profileImage,
+        {
+          folder: `Bloggy/profiles`,
+          public_id: `${req.params.userId}`,
+        }
+      );
+
+      cloudinaryImgUrl = uploadResponse.secure_url;
+    }
+
     const updatedUser = await UserModel.findByIdAndUpdate(
       {
         _id: id,
       },
       {
         ...req.body,
+        profileImage: cloudinaryImgUrl ? cloudinaryImgUrl : "",
       },
       {
         new: true,
@@ -110,6 +126,23 @@ const profileUpdate = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+//upload image to cloudinary:
+//const cloudUpload = async (req, res) => {
+//  try {
+//    const uploadResponse = await cloudinary.uploader.upload(
+//      req.body.profileImage,
+//      {
+//        folder: "Bloggy/Profiles",
+//        public_id: "tarunfcsdcy",
+//      }
+//    );
+//    console.log(uploadResponse);
+//    res.status(200).json({ mssg: "done" });
+//  } catch (err) {
+//    res.status(400).json({ error: err.message });
+//  }
+//};
 
 //get current user:
 const currentUser = async (req, res) => {
