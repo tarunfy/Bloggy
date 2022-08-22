@@ -7,6 +7,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useUpdateBlog } from "../../../hooks/Blog/useUpdateBlog";
+import { useAuthContext } from "../../../hooks/Auth/useAuthContext";
 
 const Edit = () => {
   const [markdown, setMarkdown] = useState(``);
@@ -14,6 +15,8 @@ const Edit = () => {
   const [coverImage, setCoverImage] = useState(null);
 
   const router = useRouter();
+
+  const { user } = useAuthContext();
 
   const { isLoading, updateBlog } = useUpdateBlog();
 
@@ -44,6 +47,7 @@ const Edit = () => {
       coverImage,
       markdown,
       blogTitle: title,
+      userId: user._id,
     };
     const error = await updateBlog(router.query.blogId, data);
     if (!error) {

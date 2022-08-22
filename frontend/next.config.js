@@ -4,6 +4,9 @@ const nextConfig = {
   env: {
     API_KEY: process.env.API_KEY,
   },
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
   reactStrictMode: true,
   swcMinify: true,
 
