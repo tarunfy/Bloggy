@@ -81,8 +81,7 @@ const Blog = ({ blog, index }) => {
                 >
                   <BsSuitHeart />
                   <p>
-                    {blog.likes.length}{" "}
-                    {blog.likes.length > 1 ? "likes" : "like"}
+                    {blog.likes} {blog.likes > 1 ? "likes" : "like"}
                   </p>
                 </div>
                 <div
@@ -95,8 +94,7 @@ const Blog = ({ blog, index }) => {
                 >
                   <AiOutlineComment />
                   <p>
-                    {blog.comments.length}{" "}
-                    {blog.comments.length > 1 ? "comments" : "comment"}
+                    {blog.comments} {blog.comments > 1 ? "comments" : "comment"}
                   </p>
                 </div>
               </div>

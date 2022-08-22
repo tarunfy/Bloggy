@@ -6,17 +6,62 @@ const cloudinary = require("../utils/cloudinary");
 const getBlogs = async (req, res) => {
   try {
     if (req.query.filterBy == "Relevant" || !req.query.filterBy) {
-      const blogs = await BlogModel.find({});
-      res.status(200).json({ blogs });
+      const blogs = await BlogModel.find({}).select(
+        "comments likes blogTitle userId createdAt coverImage"
+      );
+
+      const data = blogs.map((blog) => {
+        return {
+          ...blog._doc,
+          comments: blog._doc.comments.length,
+          likes: blog._doc.likes.length,
+        };
+      });
+
+      res.status(200).json({
+        blogs: data,
+      });
     }
     if (req.query.filterBy == "Latest") {
-      const blogs = await BlogModel.find({}).sort({ createdAt: -1 });
-      res.status(200).json({ blogs });
+      const blogs = await BlogModel.find({}).sort(
+        { createdAt: -1 },
+        {
+          markdown: 0,
+          updatedAt: 0,
+          __v: 0,
+        }
+      );
+      const data = blogs.map((blog) => {
+        return {
+          ...blog,
+          comments: blogs.comments.length,
+          likes: blogs.likes.length,
+        };
+      });
+      res.status(200).json({
+        blogs: data,
+      });
     }
 
     if (req.query.filterBy == "Top") {
-      const blogs = await BlogModel.find({}).sort({ likes: -1 });
-      res.status(200).json({ blogs });
+      const blogs = await BlogModel.find({}).sort(
+        { likes: -1 },
+        {
+          markdown: 0,
+          updatedAt: 0,
+          __v: 0,
+        }
+      );
+      const data = blogs.map((blog) => {
+        return {
+          ...blog,
+          comments: blogs.comments.length,
+          likes: blogs.likes.length,
+        };
+      });
+      res.status(200).json({
+        blogs: data,
+      });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -3,6 +3,7 @@
 const nextConfig = {
   env: {
     API_KEY: process.env.API_KEY,
+    BACKEND_BASE_URL: process.env.BACKEND_BASE_URL,
   },
   images: {
     domains: ["res.cloudinary.com"],
@@ -23,47 +24,47 @@ const nextConfig = {
     return [
       {
         source: "/api/user/signup",
-        destination: "http://localhost:4000/api/user/signup", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/user/signup`, // Proxy to Backend
       },
       {
         source: "/api/user/login",
-        destination: "http://localhost:4000/api/user/login", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/user/login`, // Proxy to Backend
       },
       {
         source: "/api/user/currentUser",
-        destination: "http://localhost:4000/api/user/currentUser", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/user/currentUser`, // Proxy to Backend
       },
       {
         source: "/api/user/logout",
-        destination: "http://localhost:4000/api/user/logout", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/user/logout`, // Proxy to Backend
       },
       {
         source: "/api/user/:userId",
-        destination: "http://localhost:4000/api/user/:userId", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/user/:userId`, // Proxy to Backend
       },
       {
         source: "/api/blogs/create",
-        destination: "http://localhost:4000/api/blogs/create", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/blogs/create`, // Proxy to Backend
       },
       {
         source: "/api/blogs",
-        destination: "http://localhost:4000/api/blogs", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/blogs`, // Proxy to Backend
       },
       {
         source: "/api/blogs/:blogId",
-        destination: "http://localhost:4000/api/blogs/:blogId", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/blogs/:blogId`, // Proxy to Backend
       },
       {
         source: "/api/blogs/comments/:blogId",
-        destination: "http://localhost:4000/api/blogs/comments/:blogId", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/blogs/comments/:blogId`, // Proxy to Backend
       },
       {
         source: "/api/blogs/:blogId/likes",
-        destination: "http://localhost:4000/api/blogs/:blogId/likes", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/blogs/:blogId/likes`, // Proxy to Backend
       },
       {
         source: "/api/blogs/:blogId/comment",
-        destination: "http://localhost:4000/api/blogs/:blogId/comment", // Proxy to Backend
+        destination: `${process.env.BACKEND_BASE_URL}/api/blogs/:blogId/comment`, // Proxy to Backend
       },
     ];
   },
