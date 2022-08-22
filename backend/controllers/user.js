@@ -127,23 +127,6 @@ const profileUpdate = async (req, res) => {
   }
 };
 
-//upload image to cloudinary:
-//const cloudUpload = async (req, res) => {
-//  try {
-//    const uploadResponse = await cloudinary.uploader.upload(
-//      req.body.profileImage,
-//      {
-//        folder: "Bloggy/Profiles",
-//        public_id: "tarunfcsdcy",
-//      }
-//    );
-//    console.log(uploadResponse);
-//    res.status(200).json({ mssg: "done" });
-//  } catch (err) {
-//    res.status(400).json({ error: err.message });
-//  }
-//};
-
 //get current user:
 const currentUser = async (req, res) => {
   const { jwt: token } = req.cookies;

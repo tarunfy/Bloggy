@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const BlogModel = require("../models/blog");
+const cloudinary = require("../utils/cloudinary");
 
 //get all blogs:
 const getBlogs = async (req, res) => {
@@ -66,7 +67,20 @@ const createBlog = async (req, res) => {
   }
 
   try {
-    const blog = await BlogModel.create(req.body);
+    let cloudinaryImgUrl;
+    if (req.body.coverImage) {
+      const uploadResponse = await cloudinary.uploader.upload(
+        req.body.coverImage,
+        {
+          folder: `Bloggy/blogs/${req.body.userId}`,
+        }
+      );
+      cloudinaryImgUrl = uploadResponse.secure_url;
+    }
+    const blog = await BlogModel.create({
+      ...req.body,
+      coverImage: cloudinaryImgUrl ? cloudinaryImgUrl : "",
+    });
     res.status(201).json({ blog });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -121,9 +135,24 @@ const updateBlog = async (req, res) => {
   }
 
   try {
-    const updatedBlog = await BlogModel.findByIdAndUpdate(blogId, req.body, {
-      new: true,
-    });
+    let cloudinaryImgUrl;
+    if (req.body.coverImage) {
+      const uploadResponse = await cloudinary.uploader.upload(
+        req.body.coverImage,
+        {
+          folder: `Bloggy/blogs/${req.body.userId}`,
+          public_id: `${blogId}`,
+        }
+      );
+      cloudinaryImgUrl = uploadResponse.secure_url;
+    }
+    const updatedBlog = await BlogModel.findByIdAndUpdate(
+      blogId,
+      { ...req.body, coverImage: cloudinaryImgUrl ? cloudinaryImgUrl : "" },
+      {
+        new: true,
+      }
+    );
 
     res.status(200).json({ updatedBlog });
   } catch (err) {
